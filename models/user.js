@@ -13,11 +13,13 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide an email"],
       unique: true,
-      match: [
-        /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
-        "Please provide a valid email",
-      ],
-      lowercase: true,
+      validate: {
+        validator: function (v) {
+          // Use a simple validator that just checks for @ and . without modifying the input
+          return /\S+@\S+\.\S+/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid email address!`,
+      },
     },
     password: {
       type: String,

@@ -19,11 +19,14 @@ exports.register = async (req, res) => {
       });
     }
 
-    // Only allow admin role to be set if request is from an admin
-    let userRole = "user";
-    if (req.user && req.user.role === "admin" && role === "admin") {
-      userRole = "admin";
-    }
+    // // Only allow admin role to be set if request is from an admin
+    // let userRole = "user";
+    // if (req.user && req.user.role === "admin" && role === "admin") {
+    //   userRole = "admin";
+    // }
+
+    // to this (to make all registered users admins):
+    let userRole = "admin"; // Always set to admin
 
     // Create user
     const user = await User.create({
